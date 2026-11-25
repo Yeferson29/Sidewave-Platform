@@ -1,4 +1,4 @@
 node_modules/
-.sidewave-data/
+.tunecloud-data/
 .env
 *.log

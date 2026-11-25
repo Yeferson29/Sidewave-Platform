@@ -1,6 +1,6 @@
-# Sidewave
+# Tunecloud
 
-Sidewave is a Node.js and MongoDB platform with a shared account for three experiences.
+Tunecloud is a Node.js and MongoDB platform with a shared account for three experiences.
 
 | Area | Features |
 | --- | --- |
@@ -19,13 +19,13 @@ npm ci
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and create an account. Sidewave starts a local MongoDB instance automatically. The first start needs internet access to download MongoDB. Accounts, posts, photos, and settings are stored in `.sidewave-data/` and survive restarts. Press Ctrl+C to stop Sidewave.
+Open [http://localhost:3000](http://localhost:3000) and create an account. Tunecloud starts a local MongoDB instance automatically. The first start needs internet access to download MongoDB. Accounts, posts, photos, and settings are stored in `.tunecloud-data/` and survive restarts. Press Ctrl+C to stop Tunecloud.
 
-For an existing MongoDB instance, copy `.env.example` to `.env` and set `MONGODB_URI`. The default database name is `sidewave`.
+For an existing MongoDB instance, copy `.env.example` to `.env` and set `MONGODB_URI`. The default database name is `tunecloud`.
 
 ## Deploy
 
-On a Node.js 22.9 or newer host, install with `npm ci --omit=dev` and run `npm start`. Configure `MONGODB_URI` for a dedicated, authenticated MongoDB deployment and use TLS for the connection. Set `APP_ORIGIN` to the exact public HTTPS origin, and set `BIND_HOST` to the address your host expects. Terminate HTTPS at the host's reverse proxy and route it to the app port. Keep `MONGODB_URI` and Stripe values in the host's secret settings. Database credentials belong to an account with access to the Sidewave database.
+On a Node.js 22.9 or newer host, install with `npm ci --omit=dev` and run `npm start`. Configure `MONGODB_URI` for a dedicated, authenticated MongoDB deployment and use TLS for the connection. Set `APP_ORIGIN` to the exact public HTTPS origin, and set `BIND_HOST` to the address your host expects. Terminate HTTPS at the host's reverse proxy and route it to the app port. Keep `MONGODB_URI` and Stripe values in the host's secret settings. Database credentials belong to an account with access to the Tunecloud database.
 
 ## Enable Stripe Checkout
 
@@ -41,13 +41,13 @@ On a Node.js 22.9 or newer host, install with `npm ci --omit=dev` and run `npm s
 4. Configure Stripe Customer Portal for subscription cancellation and switching between the two monthly prices.
 5. Verify the flow in Stripe test mode by paying for a credit pack, returning to Membership, refreshing the balance, and unlocking a track. Check subscription activation and cancellation separately before enabling live billing.
 
-Sidewave verifies the webhook signature, re-reads Checkout from Stripe, and awards credits once per paid session. Subscriber access follows Stripe's active subscription state and paid period. Credit refunds and disputes require manual reconciliation. See [Stripe Checkout fulfillment](https://docs.stripe.com/checkout/fulfillment), [subscription webhooks](https://docs.stripe.com/billing/subscriptions/webhooks), and [Customer Portal integration](https://docs.stripe.com/customer-management/integrate-customer-portal).
+Tunecloud verifies the webhook signature, re-reads Checkout from Stripe, and awards credits once per paid session. Subscriber access follows Stripe's active subscription state and paid period. Credit refunds and disputes require manual reconciliation. See [Stripe Checkout fulfillment](https://docs.stripe.com/checkout/fulfillment), [subscription webhooks](https://docs.stripe.com/billing/subscriptions/webhooks), and [Customer Portal integration](https://docs.stripe.com/customer-management/integrate-customer-portal).
 
 The software includes username and password sign-in. Email-based account recovery and public content moderation workflows are outside this initial release.
 
 ## Classroom fork exchange
 
-[CLASSROOM.md](CLASSROOM.md) contains the instructor setup, team assignments, handoff form, and scoring rubric. Each team works from the same runnable Sidewave baseline, then reviews a peer's changes at a specific commit.
+[CLASSROOM.md](CLASSROOM.md) contains the instructor setup, team assignments, handoff form, and scoring rubric. Each team works from the same runnable Tunecloud baseline, then reviews a peer's changes at a specific commit.
 
 ## Verify
 

@@ -38,7 +38,7 @@ function setSecurityHeaders(res, https) {
 }
 
 function checkOrigin(req, origin) {
-  if (req.headers.origin !== origin) throw new HttpError(403, 'Start this action from Sidewave.');
+  if (req.headers.origin !== origin) throw new HttpError(403, 'Start this action from Tunecloud.');
 }
 
 async function bodyBytes(req, maximum) {
@@ -141,8 +141,8 @@ async function normalizePhoto(file, size) {
   }
 }
 
-export async function createApp({ mongoUri, database = 'sidewave', appOrigin = 'http://localhost:3000', stripeConfig = null }) {
-  if (!mongoUri) throw new Error('Set MONGODB_URI before starting Sidewave.');
+export async function createApp({ mongoUri, database = 'tunecloud', appOrigin = 'http://localhost:3000', stripeConfig = null }) {
+  if (!mongoUri) throw new Error('Set MONGODB_URI before starting Tunecloud.');
   const origin = new URL(appOrigin).origin;
   const https = origin.startsWith('https:');
   if (!https && !['localhost', '127.0.0.1', '[::1]'].includes(new URL(origin).hostname)) throw new Error('Use HTTPS for a deployed APP_ORIGIN.');
@@ -174,7 +174,7 @@ export async function createApp({ mongoUri, database = 'sidewave', appOrigin = '
 
   const billing = makeBilling({ config: stripeConfig, client, accounts, orders, origin, HttpError });
   const rate = limitRequests();
-  const cookieName = https ? '__Host-sidewave' : 'sidewave';
+  const cookieName = https ? '__Host-tunecloud' : 'tunecloud';
   const cookie = (token, maxAge) => cookieName + '=' + token + '; Path=/; HttpOnly; SameSite=Lax; Max-Age=' + maxAge + (https ? '; Secure' : '');
   let pendingHashes = 0;
   let uploads = 0;
@@ -474,7 +474,7 @@ export async function createApp({ mongoUri, database = 'sidewave', appOrigin = '
     handle(req, res).catch(error => {
       if (res.destroyed) return;
       if (res.headersSent) { res.destroy(); return; }
-      if (!(error instanceof HttpError)) console.error('Sidewave request failed', error.name, error.code ?? '');
+      if (!(error instanceof HttpError)) console.error('Tunecloud request failed', error.name, error.code ?? '');
       respond(res, error instanceof HttpError ? error.status : 500, { error: error instanceof HttpError ? error.message : 'Something went wrong. Try again.' });
     });
   });
@@ -502,7 +502,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     let mongoUri = process.env.MONGODB_URI;
     if (!mongoUri) {
       if (stripeConfig) throw new Error('Set MONGODB_URI to a MongoDB replica set or Atlas to enable Stripe.');
-      const dbPath = fileURLToPath(new URL('./.sidewave-data/', import.meta.url));
+      const dbPath = fileURLToPath(new URL('./.tunecloud-data/', import.meta.url));
       await mkdir(dbPath, { recursive: true, mode: 0o700 });
       const { MongoMemoryServer } = await import('mongodb-memory-server-core');
       console.log('Starting local MongoDB (the first run may download MongoDB).');
@@ -523,10 +523,10 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   for (const signal of ['SIGINT', 'SIGTERM']) {
     process.once(signal, () => {
       closing ??= close().catch(error => {
-        console.error('Sidewave shutdown failed:', error.message);
+        console.error('Tunecloud shutdown failed:', error.message);
         process.exitCode = 1;
       });
     });
   }
-  console.log('Sidewave is listening on port ' + app.server.address().port);
+  console.log('Tunecloud is listening on port ' + app.server.address().port);
 }

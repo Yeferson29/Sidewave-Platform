@@ -23,7 +23,7 @@ after(async () => { await testMongo?.stop(); });
 
 async function serverFor(t, stripeConfig) {
   const uri = externalUri || testMongo.getUri();
-  const database = 'sidewave_test_' + randomUUID().replaceAll('-', '');
+  const database = 'tunecloud_test_' + randomUUID().replaceAll('-', '');
   const temporary = createServer().listen(0, '127.0.0.1');
   await once(temporary, 'listening');
   const port = temporary.address().port;

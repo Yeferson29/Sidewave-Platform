@@ -26,8 +26,8 @@ export function makeBilling({ config, client, accounts, orders, origin, HttpErro
 
   async function customerFor(account) {
     if (account.stripeCustomer) return account.stripeCustomer;
-    const customer = await stripe.customers.create({ metadata: { sidewave_account: account._id } },
-      { idempotencyKey: 'sidewave-account-' + account._id });
+    const customer = await stripe.customers.create({ metadata: { tunecloud_account: account._id } },
+      { idempotencyKey: 'tunecloud-account-' + account._id });
     const saved = await accounts.findOneAndUpdate({ _id: account._id, stripeCustomer: { $exists: false } },
       { $set: { stripeCustomer: customer.id } }, { returnDocument: 'after' });
     return (saved ?? await accounts.findOne({ _id: account._id })).stripeCustomer;
@@ -72,7 +72,7 @@ export function makeBilling({ config, client, accounts, orders, origin, HttpErro
       line_items: [{ price: prices[id], quantity: 1 }],
       success_url: origin + '/?payment=return#billing', cancel_url: origin + '/#billing',
       ...(subscription ? { expires_at: reservation.expires } : {})
-    }, { idempotencyKey: subscription ? 'sidewave-subscription-' + reservation.key : 'sidewave-credits-' + account._id + '-' + id + '-' + requestId });
+    }, { idempotencyKey: subscription ? 'tunecloud-subscription-' + reservation.key : 'tunecloud-credits-' + account._id + '-' + id + '-' + requestId });
     if (subscription) await accounts.updateOne({ _id: account._id, 'pendingSubscription.key': reservation.key },
       { $set: { 'pendingSubscription.sessionId': checkout.id } });
     return checkout.url;

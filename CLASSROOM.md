@@ -1,12 +1,12 @@
-# Sidewave fork exchange
+# Tunecloud fork exchange
 
-Build a feature in a Sidewave fork, swap commit links with another team, and review each other's changes. Return a private report and an expected-behavior test. Each author team then patches the finding and verifies the fix.
+Build a feature in a Tunecloud fork, swap commit links with another team, and review each other's changes. Return a private report and an expected-behavior test. Each author team then patches the finding and verifies the fix.
 
 ## Set up the exchange
 
-1. Create a class GitHub repository from the extracted `sidewave` folder. Commit the full project, including `.env.example` and the lockfile. Tag the starting commit `class-baseline` and give every team its URL.
+1. Create a class GitHub repository from the extracted `tunecloud` folder. Commit the full project, including `.env.example` and the lockfile. Tag the starting commit `class-baseline` and give every team its URL.
 2. Give each team access to the baseline and its assigned partner repo. Use private forks if the class organization's policy permits them. Otherwise, create a private repository per team with the same baseline commit. Confirm teams can read the assigned repositories and submit reports privately. [GitHub organization fork settings](https://docs.github.com/en/organizations/managing-organization-settings/managing-the-forking-policy-for-your-organization) · [GitHub repository access](https://docs.github.com/en/repositories/creating-and-managing-repositories/access-to-repositories)
-3. Have teams run review copies in disposable class environments with separate local databases, synthetic users and content, and test billing fixtures. Limit the review to the assigned commit and its local Sidewave instance.
+3. Have teams run review copies in disposable class environments with separate local databases, synthetic users and content, and test billing fixtures. Limit the review to the assigned commit and its local Tunecloud instance.
 
 ## Round 1 · Build and submit
 
@@ -31,7 +31,7 @@ npm ci
 npm start
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in a separate browser profile. Each checkout has its own `.sidewave-data/` directory. The browser profile keeps its accounts and cookies separate. Press Ctrl+C to stop the review copy.
+Open [http://localhost:3001](http://localhost:3001) in a separate browser profile. Each checkout has its own `.tunecloud-data/` directory. The browser profile keeps its accounts and cookies separate. Press Ctrl+C to stop the review copy.
 
 Send the report privately to your partner team and instructor. If the checked properties hold, submit the evidence for a passed review instead of inventing a finding.
 
